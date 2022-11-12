@@ -16,12 +16,13 @@
 html {
   overflow-x: hidden;
   margin-right: calc(-1 * (100vw - 100%));
+  background-color: var(--light-gray);
 }
 
 body {
   font-family: 'Nunito', sans-serif;
   background-color: var(--background);
-  color: var(--white);
+  color: var(--black);
   /* Disable margin and padding */
   margin: 0;
   padding: 0;
