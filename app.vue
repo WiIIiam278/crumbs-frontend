@@ -1,0 +1,36 @@
+<template>
+  <NuxtPage />
+</template>
+
+
+<style>
+/* Colors */
+:root {
+  --white: #fff;
+  --light-gray: #F0F0F0;
+  --dark-gray: #707070;
+  --black: #000;
+}
+
+/* Scrollbar style rules (font, bg color) */
+html {
+  overflow-x: hidden;
+  margin-right: calc(-1 * (100vw - 100%));
+}
+
+body {
+  font-family: 'Nunito', sans-serif;
+  background-color: var(--background);
+  color: var(--white);
+  /* Disable margin and padding */
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+/* Default link styling */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+</style>
