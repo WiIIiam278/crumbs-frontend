@@ -7,6 +7,7 @@
                         <h1>Where are you?</h1>
                         <input type="text" id="postcode" placeholder="Enter postcode" />
                         &nbsp;
+                        <div id="postcode-validator"></div>
                         <!-- <ButtonLink @click="postcode">Find</ButtonLink>
                         <AddressFinder postcode="KT121NF" /> -->
                         </div>
@@ -68,8 +69,39 @@ const error = { value: '' };
 // submit form method
 const submit = async () => {
     // get form data
+    const postcode = document.getElementById('postcode').value;
+    const phoneRegionCode = document.getElementById('phone-region-code').value;
+    const phoneNumber = document.getElementById('phone').value;
+    const phone = phoneRegionCode + phoneNumber;    
+    const email = document.getElementById('email').value;
+
+    if (!postcode || !phoneNumber || !email) {
+        error.value = 'Please fill in all fields';
+        document.querySelector('.error').innerHTML = error.value;
+        return;
+    }
+
+    if (!validateEmail(email)) {
+        error.value = 'Please enter a valid email address';
+        document.querySelector('.error').innerHTML = error.value;
+        return;
+    }
+
+    if (!validateMobileNumber(phone)) {
+        error.value = 'Please enter a valid mobile number';
+        document.querySelector('.error').innerHTML = error.value;
+        return;
+    }
+
+    if (!validatePostcode(postcode)) {
+        error.value = 'Please enter a valid postcode';
+        document.querySelector('.error').innerHTML = error.value;
+        return;
+    }
+
+    // get form data
     const formData = {
-        postcode: document.getElementById('postcode').value,
+        address: document.getElementById('postcode').value,
         type: document.querySelector('input[name="type"]:checked').value,
         items: [],
         phone: document.getElementById('phone').value,
@@ -87,7 +119,7 @@ const submit = async () => {
     });
 
     // POST form data
-    const res = await fetch('/api/offer', {
+    const res = await fetch('http://localhost:4123/api/donate', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -98,7 +130,7 @@ const submit = async () => {
     // handle response
     if (res.status === 200) {
         // redirect to success page
-        window.location.href = '/success';
+        window.location.href = '/order/confirm';
     } else {
         // display error message
         error.value = await res.text();
